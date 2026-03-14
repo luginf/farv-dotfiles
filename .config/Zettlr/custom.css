@@ -2,8 +2,36 @@
 https://forum.zettlr.com/d/8-share-your-favourite-custom-css-hacks/11
 */
 
-body:not(.dark) {
+.cm-quote {
+     /* style commentaire */
+    font-style: italic;
+    color: hsl(240, 10%, 70%);
+}
 
+
+span.cm-quote.cm-content-span.cm-code-mark.cm-meta {
+    /* marche pas */ 
+    font-style: italic;
+    color: hsl(240, 10%, 70%);
+}
+
+.main-editor-wrapper.fullscreen .cm-scroller {
+    /* distraction-free mode width */
+  padding: 0 20vw;
+}
+
+.cm-scroller {
+    /* main editor */
+    /*background-Color: #f2e5bc; */
+   /* font-family: 'Courier Prime'; */
+}
+.cm-editor {
+    /* font-size: 1.2em; */
+    /* background-Color: #f2e5bc; */
+    /* font-family: 'Courier Prime'; */
+}
+
+body:not(.dark) {
     .cm-url,
     .cm-link,
     .cm-code-mark,

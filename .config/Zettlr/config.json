@@ -1,10 +1,11 @@
 {
-  "version": "4.1.1",
-  "buildDate": "2026-01-27T19:59:54.096Z",
+  "version": "4.1.2",
+  "buildDate": "2026-03-14T18:27:02.575Z",
   "app": {
     "openFiles": [
       "/home/eric/ownCloud/en_cours/feuilleton/feuilleton.t2t",
-      "/home/eric/ownCloud/en_cours/feuilleton/notes.txt"
+      "/home/eric/ownCloud/en_cours/feuilleton/notes.txt",
+      "/home/eric/ownCloud/en_cours/feuilleton/temp.txt"
     ],
     "openWorkspaces": [
       "/home/eric/ownCloud/owncloud-notes/lionwiki/var/pages",
@@ -14,41 +15,43 @@
       "/home/eric/Documents/Zettlr Tutorial"
     ]
   },
-  "openDirectory": "/home/eric/ownCloud/owncloud-notes/zettelbox",
+  "openDirectory": "/home/eric/_mesdocs/mes_sites_internet/gemini/sites",
   "dialogPaths": {
     "askFileDialog": "/home/eric/ownCloud/en_cours/feuilleton",
     "askDirDialog": "/home/eric/_mesdocs/mes_sites_internet/gemini/sites",
     "askLangFileDialog": ""
   },
   "window": {
-    "nativeAppearance": true,
+    "nativeAppearance": false,
     "vibrancy": false,
     "sidebarVisible": true,
-    "currentSidebarTab": "relatedFiles",
+    "currentSidebarTab": "toc",
     "recentGlobalSearches": [
-      "#écriture",
-      "#garvalf",
-      "#506",
-      "#yaml",
-      "#pédale",
-      "#guitare",
-      "musique.guitare",
-      "guitare",
-      "#moto",
-      "moto"
+      "#216",
+      "obsidian",
+      "gameboy",
+      "lessive",
+      "tarot.gmi",
+      "#tarot",
+      "tarot",
+      "maison",
+      "eric",
+      "boxer"
     ]
   },
   "ui": {
     "fileManagerSplitSize": [
-      20,
-      80
+      21,
+      79
     ],
     "editorSidebarSplitSize": [
-      84,
-      16
+      88,
+      12
     ]
   },
-  "attachmentExtensions": [],
+  "attachmentExtensions": [
+    ".txt2tags"
+  ],
   "darkMode": false,
   "alwaysReloadFiles": true,
   "autoDarkMode": "system",
@@ -62,7 +65,7 @@
   "fileManagerMode": "combined",
   "fileManagerShowFiles": true,
   "fileManagerShowWorkspaces": true,
-  "fileNameDisplay": "title+heading",
+  "fileNameDisplay": "filename",
   "newFileNamePattern": "%id.txt",
   "newFileDontPrompt": false,
   "export": {
@@ -80,16 +83,20 @@
       {
         "filePath": "/home/eric/Documents/Zettlr Tutorial/welcome.md",
         "profile": "HTML.yaml"
+      },
+      {
+        "filePath": "/home/eric/ownCloud/owncloud-notes/zettelbox/id20260206x232321.txt",
+        "profile": "txt2tags.yaml"
       }
     ],
-    "lastUsedProfile": "HTML.yaml"
+    "lastUsedProfile": "txt2tags.yaml"
   },
   "zkn": {
     "idRE": "(id\\d{8}x\\d{6})",
     "idGen": "id%Y%M%Dx%h%m%s",
     "linkAddFileTitle": true,
     "linkWithIDIfPossible": true,
-    "linkFormat": "title|link",
+    "linkFormat": "link|title",
     "autoSearch": true,
     "customDirectory": "/home/eric/ownCloud/owncloud-notes/zettelbox"
   },
@@ -105,11 +112,12 @@
     "enableTableHelper": true,
     "indentUnit": 4,
     "indentWithTabs": false,
-    "fontSize": 18,
+    "fontSize": 20,
     "countChars": false,
     "inputMode": "default",
     "boldFormatting": "**",
     "italicFormatting": "_",
+    "highlightFormatting": "==",
     "readabilityAlgorithm": "dale-chall",
     "showStatusbar": true,
     "showFormattingToolbar": true,
@@ -336,9 +344,10 @@
     }
   },
   "display": {
-    "theme": "bielefeld",
+    "theme": "karl-marx-stadt",
     "hideToolbarInDistractionFree": true,
     "markdownFileExtensions": true,
+    "previewModeShowSyntaxWhenCursorIsAdjacent": true,
     "imageWidth": 100,
     "imageHeight": 50,
     "renderingMode": "raw",
@@ -383,12 +392,17 @@
       "showInFilemanager": false,
       "showInSidebar": false,
       "openWith": "system"
+    },
+    "dotFiles": {
+      "showInFilemanager": false,
+      "showInSidebar": false,
+      "openWith": "system"
     }
   },
   "selectedDicts": [
     "fr-FR"
   ],
-  "appLang": "en-US",
+  "appLang": "fr-FR",
   "debug": true,
   "watchdog": {
     "activatePolling": false,
@@ -403,7 +417,7 @@
       "player.vimeo.com"
     ],
     "checkForUpdates": false,
-    "zoomBehavior": "gui"
+    "zoomBehavior": "editor"
   },
   "checkForBeta": false,
   "displayToolbarButtons": {
@@ -411,6 +425,7 @@
     "showNewFileButton": true,
     "showPreviousFileButton": true,
     "showNextFileButton": true,
+    "showPandocDivSpanButton": true,
     "showMarkdownCommentButton": true,
     "showMarkdownLinkButton": true,
     "showMarkdownImageButton": true,

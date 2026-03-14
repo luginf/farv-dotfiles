@@ -258,7 +258,7 @@ deploy_dotfiles() {
 	done
 
 	# Zettl
-	for R in .config/Zettlr/snippets .config/Zettlr/config.json .config/Zettlr/custom.css 
+	for R in .config/Zettlr/snippets .config/Zettlr/config.json .config/Zettlr/custom.css  .config/Zettlr/tags.json .config/Zettlr/user.dic
 		do
 		if [ -f ~/$R ]; then
 			echo -e "~/$R is already present on your system. Backup and/or delete it first manually."

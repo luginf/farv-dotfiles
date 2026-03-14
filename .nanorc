@@ -23,7 +23,7 @@ include "/usr/share/nano/*.nanorc"         # Enables the syntax highlighting.
 set speller "aspell -x -c"         # Sets what spelling utility to use.
 set constantshow    # Displays useful information e.g. line number and position in the bottom bar.
 set linenumbers     # Lines are numbered.
-set casesensitive   # Case insensitive search.
+#set casesensitive   # Case insensitive search (but we don't want this!)
 set historylog      # Save the last 100 history searches for later use.
 set positionlog     # Saves the cursor position between editing sessions.
 #set zap             # Allows you to highlight text (CTRL+SHIFT+ARROW) and delete it with backspace.
