@@ -15,7 +15,7 @@
       "/home/eric/Documents/Zettlr Tutorial"
     ]
   },
-  "openDirectory": "/home/eric/_mesdocs/mes_sites_internet/gemini/sites",
+  "openDirectory": "/home/eric/ownCloud/owncloud-notes/zettelbox",
   "dialogPaths": {
     "askFileDialog": "/home/eric/ownCloud/en_cours/feuilleton",
     "askDirDialog": "/home/eric/_mesdocs/mes_sites_internet/gemini/sites",
@@ -27,26 +27,26 @@
     "sidebarVisible": true,
     "currentSidebarTab": "toc",
     "recentGlobalSearches": [
-      "#216",
-      "obsidian",
-      "gameboy",
-      "lessive",
-      "tarot.gmi",
-      "#tarot",
-      "tarot",
-      "maison",
-      "eric",
-      "boxer"
+      "beepbox",
+      "ninja",
+      "mame",
+      "renpy",
+      "id20260314x234349",
+      "reves.txt",
+      "ésotérisme",
+      "\"voir aussi\"",
+      "voir aussi",
+      "#patrimoine"
     ]
   },
   "ui": {
     "fileManagerSplitSize": [
-      21,
-      79
+      24,
+      76
     ],
     "editorSidebarSplitSize": [
-      88,
-      12
+      85,
+      15
     ]
   },
   "attachmentExtensions": [
@@ -96,7 +96,7 @@
     "idGen": "id%Y%M%Dx%h%m%s",
     "linkAddFileTitle": true,
     "linkWithIDIfPossible": true,
-    "linkFormat": "link|title",
+    "linkFormat": "title|link",
     "autoSearch": true,
     "customDirectory": "/home/eric/ownCloud/owncloud-notes/zettelbox"
   },
@@ -112,11 +112,11 @@
     "enableTableHelper": true,
     "indentUnit": 4,
     "indentWithTabs": false,
-    "fontSize": 20,
+    "fontSize": 17,
     "countChars": false,
     "inputMode": "default",
     "boldFormatting": "**",
-    "italicFormatting": "_",
+    "italicFormatting": "//",
     "highlightFormatting": "==",
     "readabilityAlgorithm": "dale-chall",
     "showStatusbar": true,
@@ -128,7 +128,7 @@
         "level": "picky",
         "motherTongue": "fr-FR",
         "variants": {
-          "en": "en-US",
+          "en": "en-GB",
           "de": "de-DE",
           "pt": "pt-PT",
           "ca": "ca-ES"

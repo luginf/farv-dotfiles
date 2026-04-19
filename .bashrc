@@ -221,3 +221,7 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
+. "$HOME/.cargo/env"
+
+# eval $(luarocks path --bin)
+
