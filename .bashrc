@@ -7,7 +7,7 @@ source ~/.profile
 # don't load xrdb, it will messed up remote connections
 # use .Xresources instead, it should be loaded by the WM
 # xrdb -load ~/.Xdefaults
-xrdb -load ~/.Xresources
+[ -n "$DISPLAY" ] && xrdb -load ~/.Xresources
 # xrdb -load ~/.Xresources-monochrome
 # [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
@@ -25,7 +25,7 @@ alias mv="mv -i"
 alias cp="cp -i"
 alias psg='ps auxww | grep'
 
-alias rmfirefoxcache='rm -fr /home/eric/.cache/mozilla/firefox/zv7szrpx.default-1697456657405/cache2/entries/* & printf "/home/eric/.cache/mozilla/firefox/zv7szrpx.default-1697456657405/cache2/entries/" '
+alias rmfirefoxcache="rm -fr \$HOME/.cache/mozilla/firefox/zv7szrpx.default-1697456657405/cache2/entries/* & printf \$HOME/.cache/mozilla/firefox/zv7szrpx.default-1697456657405/cache2/entries/"
 
 
 OS="`uname`"
@@ -82,8 +82,8 @@ alias uf-glossary="scite ~/ownCloud/en_cours/uxn/uf_forth/uf8/GLOSSARY"
 ## ALIASES
 alias ufx="uxnemu -2x ~/roms/ufx.rom" 
 alias uf="uxncli ~/roms/uf.rom" 
-alias picotron='/home/eric/ownCloud/en_cours/picotron/picotron'
-alias hp48g='/home/eric/ownCloud/divers/opt/hp48/x48ng'
+alias picotron="$HOME/ownCloud/en_cours/picotron/picotron"
+alias hp48g="$HOME/ownCloud/divers/opt/hp48/x48ng"
 # alias lagrange='/opt/Lagrange-1.18.1-x86_64.AppImage'
 alias lisp='sbcl'
 alias portacle='/opt/lisp-portacle/lin/bin/portacle'
@@ -110,18 +110,12 @@ alias_help()
 
 
 
-export  PATH=$PATH:/usr/NX/bin/:/usr/local/lib/:/usr/local/include/:/usr/local/bin:/home/eric/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/:/opt/utroff/bin/:$HOME/.local/bin/:$HOME/_mesdocs/mes_scripts/:$HOME/ownCloud/divers/opt/:/opt/:/usr/local/Gambit/bin/:$HOME/.local/share/yabridge/:$HOME/sync/scripts/
-
-export GS_LIB=/home/eric/_mesdocs/mes_musiques/abc/site/fonts/
+export GS_LIB="$HOME/_mesdocs/mes_musiques/abc/site/fonts/"
 #export JAVA_HOME=/opt/java/jre/bin/java
 
+export GOPATH="$HOME/gopath"
 
-export GOPATH=$HOME/gopath
-
-export  PATH=$PATH:/usr/local/lib/:/opt/gnome/bin/:/usr/NX/bin/:/usr/bin/android-sdk-linux/platform-tools:/usr/include/wx-2.8/wx/:/home/eric/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/:$GOPATH:$GOPATH/bin:/opt/nim-1.4.0/bin/
-
-
-export PATH=$PATH:/usr/local/go/bin
+export PATH="$PATH:/usr/NX/bin:/usr/local/lib:/usr/local/include:/usr/local/bin:/opt/utroff/bin:$HOME/.local/bin:$HOME/_mesdocs/mes_scripts:$HOME/ownCloud/divers/opt:/opt:/usr/local/Gambit/bin:$HOME/.local/share/yabridge:$HOME/sync/scripts:/opt/gnome/bin:/usr/bin/android-sdk-linux/platform-tools:$HOME/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu:$GOPATH:$GOPATH/bin:/opt/nim-1.4.0/bin:/usr/local/go/bin"
 
 
 export SVN_EDITOR=vim
@@ -154,7 +148,7 @@ esac
 # source "$HOME/.cargo/env"
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-[ -f "/home/eric/.ghcup/env" ] && source "/home/eric/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 export PATH=/temp/github/gcsplit/bin/Debug:$PATH
 export PATH=/temp/github/gcsplit/SPAdes-3.11.1-Linux/bin:$PATH
 export PATH=/temp/github/gcsplit/KmerStream:$PATH
@@ -212,21 +206,20 @@ export PATH=$BUN_INSTALL/bin:$PATH
 # !! Contents within this block are managed by juliaup !!
 
 case ":$PATH:" in
-    *:/home/eric/.juliaup/bin:*)
+    *:"$HOME/.juliaup/bin":*)
         ;;
 
     *)
-        export PATH=/home/eric/.juliaup/bin${PATH:+:${PATH}}
+        export PATH="$HOME/.juliaup/bin${PATH:+:${PATH}}"
         ;;
 esac
 
 # <<< juliaup initialize <<<
-. "$HOME/.cargo/env"
 
 # eval $(luarocks path --bin)
 
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/eric/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 

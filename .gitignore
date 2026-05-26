@@ -1,2 +1,15 @@
 .hg
 .config/micro/buffers
+
+# backups created by deploy.sh
+*.old
+*.bak
+*~
+
+# editor swap files
+*.swp
+*.swo
+
+# secrets
+.env
+.netrc

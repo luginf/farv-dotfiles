@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
 
-# https://github.com/farvardin/dotfiles
+# https://github.com/farvardin/dotfiles
 # https://sourceforge.net/p/farvardin-dotfiles/code/ci/default/tree/
-# 
+#
 # this script won't delete your existing configuration
-
-# 
-# sudo add-apt-repository ppa:gottcode/gcppa
-# optionel : 
-# cadence
 
 DIFF=meld
 
@@ -21,289 +16,156 @@ apt-mini() {
 apt-extra() {
 	printf "We will install some more deb packages on the system. \n\n"
 	sleep 2
-	sudo gimp-gmic gmic blender veracrypt gocryptfs hatari gforth freeplane mcomix nextcloud-desktop retroarch syncthing calibre vlc
+	sudo apt install gimp-gmic gmic blender veracrypt gocryptfs hatari gforth freeplane mcomix nextcloud-desktop retroarch syncthing calibre vlc
+}
+
+# Deploy a single file as a symlink (default) or copy to $HOME/$src
+deploy_file() {
+	local src="$1"
+	local mode="${2:-link}"
+	local dest="$HOME/$src"
+	local dest_dir
+	dest_dir="$(dirname "$dest")"
+
+	mkdir -p "$dest_dir"
+
+	if [ -e "$dest" ]; then
+		echo -e "$dest is already present on your system."
+		if cmp -s "$src" "$dest" 2>/dev/null; then
+			printf '   The files are the same \n\n'
+		else
+			printf '\n   The files are different, do you want to compare them? (y/n):\n'
+			read -r answer
+			if [[ "$answer" == "y" ]]; then
+				$DIFF "$src" "$dest"
+			fi
+			echo -e "Backup $dest to $dest.old and install dotfile? (y/n)"
+			read -r answ2
+			if [[ "$answ2" == "y" ]]; then
+				mv "$dest" "$dest.old"
+				if [[ "$mode" == "copy" ]]; then
+					cp "$PWD/$src" "$dest"
+				else
+					ln -s "$PWD/$src" "$dest"
+				fi
+				printf "Done.\n"
+			else
+				printf "Nothing was changed.\n"
+			fi
+		fi
+	else
+		if [[ "$mode" == "copy" ]]; then
+			cp "$PWD/$src" "$dest"
+			echo -e "\033[1mCOPYing\033[0m \033[4m$src\033[0m to $dest ..."
+		else
+			ln -s "$PWD/$src" "$dest"
+			echo -e "\033[1mlinking\033[0m \033[4m$src\033[0m to $dest ..."
+		fi
+	fi
+}
+
+# Deploy a directory as a symlink to $HOME/$src
+deploy_folder() {
+	local src="$1"
+	local dest="$HOME/$src"
+	local dest_dir
+	dest_dir="$(dirname "$dest")"
+
+	mkdir -p "$dest_dir"
+
+	if [ -e "$dest" ]; then
+		echo -e "$dest is already present on your system."
+		ls -alh "$dest"
+		printf 'If it is not already linked, do you want to compare the folders? (y/n):\n'
+		read -r answer
+		if [[ "$answer" == "y" ]]; then
+			$DIFF "$src" "$dest"
+			echo -e "Backup $dest to $dest.old and link? (y/n)"
+			read -r answ2
+			if [[ "$answ2" == "y" ]]; then
+				mv "$dest" "$dest.old"
+				ln -s "$PWD/$src" "$dest"
+				printf "Done.\n"
+			else
+				printf "Nothing was changed.\n"
+			fi
+		fi
+	else
+		ln -s "$PWD/$src" "$dest"
+		echo -e "\033[1mlinking\033[0m \033[4m$src\033[0m to $dest ..."
+	fi
 }
 
 deploy_dotfiles() {
 
 	# current status
 	echo -e "\n\n\033[1mCurrent files status:\033[0m"
-	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .vim .emacs .config/emacs .nanorc .Xresources .Xresources-monochrome .config/gforthrc0 
-		do
-			ls -alh  ~/$R
-		done
+	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .vim .emacs .config/emacs .nanorc .Xresources .Xresources-monochrome .config/gforthrc0; do
+		ls -alh ~/"$R" 2>/dev/null
+	done
 	echo -e "\n\n"
 
-	# files
-	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .emacs .nanorc .Xresources .Xresources-monochrome 
-		do
-		if [ -f ~/"$R" ]; then
-			echo -e "~/$R is already present on your system."
-			if cmp -s "$R" ~/"$R"; then
-				printf '   The files are the same \n\n'
-			else
-				printf '\n   The files are different, do you want to compare them? (y/n):\n'
-				read -r answer
-				if [[ "$answer" == "y" ]] ; then
-					$DIFF  "$R" ~/"$R"
-				fi
-				echo -e "Now this script can backup your $R file to $R.old and link the $R dotfile from this folder to your home so it will become effective. Do you agree? (y/n)"
-				read -r answ2
-				if [[ "$answ2" == "y" ]] ; then
-					mv ~/"$R" ~/"$R".old
-					ln -s `pwd`/"$R" ~/
-					printf "Done. \n"
-				else printf "Nothing was changed. \n"
-				fi
-			fi
-		else
-			ln -s `pwd`/$R ~/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
+	# home files
+	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .emacs .nanorc .Xresources .Xresources-monochrome; do
+		deploy_file "$R"
 	done
 
-	# single file in .config
+	# single .config file
+	deploy_file .config/gforthrc0
 
-	for R in .config/gforthrc0 
-		do
-		if [ -f ~/"$R" ]; then
-			echo -e "~/$R is already present on your system."
-			if cmp -s "$R" ~/"$R"; then
-				printf '   The files are the same \n\n'
-			else
-				printf '\n   The files are different, do you want to compare them? (y/n):\n'
-				read -r answer
-				if [[ "$answer" == "y" ]] ; then
-					$DIFF  "$R" ~/"$R"
-					echo -e "Now this script can backup your $R file to $R.old and link the $R dotfile from this folder to your home so it will become effective. Do you agree? (y/n)"
-					read -r answ2
-					if [[ "$answ2" == "y" ]] ; then
-						mv ~/"$R" ~/"$R".old
-						ln -s `pwd`/"$R" ~/.config/
-						printf "Done. \n"
-					else printf "Nothing was changed. \n"
-					fi
-				fi
-			fi
-		else
-			ln -s `pwd`/$R ~/.config/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
+	# .config/redshift.conf — AppArmor prevents symlinks, must copy
+	deploy_file .config/redshift.conf copy
+
+	# home folders
+	for R in .vim .scite .dgen Gophie; do
+		deploy_folder "$R"
 	done
 
-
-
-	# SPECIAL
-	# PB with redshit and AppArmor rubbishes
-	# files in .config 
-	# which don't support symblinks
-	for R in .config/redshift.conf
-		do
-		if [ -f ~/"$R" ]; then
-			echo -e "~/$R is already present on your system."
-			if cmp -s "$R" ~/"$R"; then
-				printf '   The files are the same \n\n'
-			else
-				printf '\n   The files are different, do you want to compare them? (y/n):\n'
-				read -r answer
-				if [[ "$answer" == "y" ]] ; then
-					$DIFF  "$R" ~/"$R"
-					echo -e "Now this script can backup your $R file to $R.old and link the $R dotfile from this folder to your home so it will become effective. Do you agree? (y/n)"
-					read -r answ2
-					if [[ "$answ2" == "y" ]] ; then
-						mv ~/"$R" ~/"$R".old
-						cp  `pwd`/"$R" ~/.config/
-						printf "Done. \n"
-					else printf "Nothing was changed. \n"
-					fi
-				fi
-			fi
-		else
-			cp  `pwd`/$R ~/.config/
-			echo -e "\033[1mCOPYing\033[0m \033[4m$R\033[0m to ~/.config/ ..."
-		fi
+	# .config folders
+	for R in .config/emacs .config/ghostwriter .config/castor .config/geany .config/nvim .config/micro; do
+		deploy_folder "$R"
 	done
 
+	# .local/share
+	deploy_folder .local/share/GottCode/FocusWriter/Themes
+	deploy_folder .local/share/cool-retro-term
 
-
-
-	# folders
-	for R in .vim .scite .dgen Gophie
-		do
-		if [ -e ~/$R ]; then
-			echo -e "~/$R is already present on your system. "
-			ls -alh  ~/$R
-			printf 'If it is not already linked, do you want to compare the folders? (y/n):\n'
-				read -r answer
-				if [[ "$answer" == "y" ]] ; then
-					$DIFF  "$R" ~/"$R"
-					echo -e "Now this script can backup your $R file to $R.old and link the $R dotfile from this folder to your home so it will become effective. Do you agree? (y/n)"
-					read -r answ2
-					if [[ "$answ2" == "y" ]] ; then
-						mv ~/"$R" ~/"$R".old
-						ln -s `pwd`/"$R" ~/
-						printf "Done. \n"
-					else printf "Nothing was changed. \n"
-					fi
-				fi
-		else
-			ln -s `pwd`/$R ~/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
-	done
-
-	# special
-
-	# .config
-
-	for R in .config/emacs .config/ghostwriter .config/castor  .config/geany .config/nvim .config/micro
-	do
-		if [ -e ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-			echo -e "Now this script can backup your $R file to $R.old and link the $R dotfile from this folder to your home so it will become effective. Do you agree? (y/n)"
-					read -r answ3
-					if [[ "$answ3" == "y" ]] ; then
-						mv ~/"$R" ~/"$R".old
-						ln -s `pwd`/"$R" ~/.config/
-						printf "Done. \n"
-					else printf "Nothing was changed. \n"
-					fi
-		else
-			ln -s `pwd`/$R ~/.config/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/.config ..."
-		fi
-	done
-
-	# .config/GottCode ?
-
-	# .config micro
-
-	# .local/share 
-
-	for R in .local/share/GottCode/FocusWriter/Themes
-		do
-		if [ -e ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-		else
-			ln -s `pwd`/$R ~/.local/share/GottCode/FocusWriter/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/.local ..."
-		fi
-	done
-
-	for R in .local/share/cool-retro-term
-		do
-		if [ -e ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-		else
-			ln -s `pwd`/$R ~/.local/share/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/.local ..."
-		fi
-	done
-
-	# we won't copy the whole folder for those projects
-
-	# atom
-	for R in .atom/styles.less .atom/config.cson
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-		else
-			echo -e "Installing .atom links. Don't forget to install also the file-watcher package!"
-			mkdir ~/.atom/
-			ln -s `pwd`/$R ~/.atom/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
+	# .atom (reminder: install the file-watcher package)
+	for R in .atom/styles.less .atom/config.cson; do
+		deploy_file "$R"
 	done
 
 	# mednafen
-	
-	for R in .mednafen/mednafen.cfg
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-		else
-			echo -e "Installing mednafen links. "
-			mkdir ~/.mednafen/
-			ln -s `pwd`/$R ~/.mednafen/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
-	done
-	
-	
+	deploy_file .mednafen/mednafen.cfg
+
 	# byobu
+	deploy_file .byobu/keybindings.tmux
 
-	for R in .byobu/keybindings.tmux
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system."
-		else
-			echo -e "Installing byobu links. "
-			mkdir ~/.byobu/
-			ln -s `pwd`/$R ~/.byobu/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
+	# lagrange (prefs only, no private keys)
+	deploy_folder .config/lagrange/fonts
+	deploy_file .config/lagrange/prefs.cfg
+
+	# Zettlr
+	deploy_folder .config/Zettlr/snippets
+	for R in .config/Zettlr/config.json .config/Zettlr/custom.css .config/Zettlr/tags.json .config/Zettlr/user.dic; do
+		deploy_file "$R"
 	done
 
-	# lagrange: we want only general prefs and fonts, not private keys!
-	for R in .config/lagrange/fonts .config/lagrange/prefs.cfg
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system. Backup and/or delete it first manually."
-		else
-			echo -e "Installing lagrange links. "
-			mkdir -p ~/.config/lagrange/
-			ln -s `pwd`/$R ~/.config/lagrange/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
+	# WindowMaker
+	deploy_file GNUstep/Library/WindowMaker/Themes/GruvBox.style
+	for R in GNUstep/Defaults/WindowMaker GNUstep/Defaults/WMState; do
+		deploy_file "$R"
 	done
 
-	# Zettl
-	for R in .config/Zettlr/snippets .config/Zettlr/config.json .config/Zettlr/custom.css  .config/Zettlr/tags.json .config/Zettlr/user.dic
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system. Backup and/or delete it first manually."
-		else
-			echo -e "Installing Zettlr links. "
-			mkdir -p ~/.config/Zettlr/
-			ln -s `pwd`/$R ~/.config/Zettlr/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
-	done
-	
-	# windowmaker 
-	for R in GNUstep/Library/WindowMaker/Themes/GruvBox.style
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system. Backup and/or delete it first manually."
-		else
-			echo -e "Installing WindowMaker links. "
-			mkdir -p ~/GNUstep/Library/WindowMaker/Themes/
-			ln -s `pwd`/$R ~/GNUstep/Library/WindowMaker/Themes/
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
-	done
-
-	for R in GNUstep/Defaults/WindowMaker GNUstep/Defaults/WMState
-		do
-		if [ -f ~/$R ]; then
-			echo -e "~/$R is already present on your system. Backup and/or delete it first manually."
-		else
-			echo -e "Installing WindowMaker links. "
-			mkdir -p ~/GNUstep/Defaults/
-			ln -s `pwd`/$R ~/GNUstep/Defaults
-			echo -e "\033[1mlinking\033[0m \033[4m$R\033[0m to ~/ ..."
-		fi
-	done
-
-# more
-printf "Now this script can install french locale properties for scite in /usr/share/scite/ (using sudo). Do you agree? (y/n)"
-				read -r answ4
-				if [[ "$answ4" == "y" ]] ; then
-					sudo cp .scite/locale.fr.properties /usr/share/scite/
-					printf "Done. \n"
-				else printf "Nothing was changed. \n"
-				fi
-				
+	# scite french locale (system-wide, needs sudo)
+	printf "Now this script can install french locale properties for scite in /usr/share/scite/ (using sudo). Do you agree? (y/n)"
+	read -r answ4
+	if [[ "$answ4" == "y" ]]; then
+		sudo cp .scite/locale.fr.properties /usr/share/scite/
+		printf "Done.\n"
+	else
+		printf "Nothing was changed.\n"
+	fi
 }
 
 
