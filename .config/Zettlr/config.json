@@ -24,19 +24,19 @@
   "window": {
     "nativeAppearance": false,
     "vibrancy": false,
-    "sidebarVisible": true,
+    "sidebarVisible": false,
     "currentSidebarTab": "toc",
     "recentGlobalSearches": [
+      "factura",
+      "microentreprise",
+      "id20260326x212630",
       "beepbox",
       "ninja",
       "mame",
       "renpy",
       "id20260314x234349",
       "reves.txt",
-      "ésotérisme",
-      "\"voir aussi\"",
-      "voir aussi",
-      "#patrimoine"
+      "ésotérisme"
     ]
   },
   "ui": {
@@ -45,8 +45,8 @@
       76
     ],
     "editorSidebarSplitSize": [
-      85,
-      15
+      74,
+      26
     ]
   },
   "attachmentExtensions": [

@@ -28,14 +28,14 @@ deploy_dotfiles() {
 
 	# current status
 	echo -e "\n\n\033[1mCurrent files status:\033[0m"
-	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties SciTEStartup.lua .tmux.conf .vimrc .jedrc .vim .emacs .config/emacs .nanorc .Xresources .Xresources-monochrome .config/gforthrc0 
+	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .vim .emacs .config/emacs .nanorc .Xresources .Xresources-monochrome .config/gforthrc0 
 		do
 			ls -alh  ~/$R
 		done
 	echo -e "\n\n"
 
 	# files
-	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties SciTEStartup.lua .tmux.conf .vimrc .jedrc .emacs .nanorc .Xresources .Xresources-monochrome 
+	for R in .bashrc .ctwmrc .ctags garglk.ini .gvimrc .hgrc .inputrc .profile .SciTEUser.properties .tmux.conf .vimrc .jedrc .emacs .nanorc .Xresources .Xresources-monochrome 
 		do
 		if [ -f ~/"$R" ]; then
 			echo -e "~/$R is already present on your system."

@@ -5,6 +5,7 @@
 
  dofile (props["SciteUserHome"].."/.scite/fold2.lua") -- works without extman 
  dofile (props["SciteUserHome"].."/.scite/t2t_navigator.lua") -- navigation titres txt2tags
+ dofile(props["SciteUserHome"] .. "/.scite/snippets.lua") -- snippets and zettelkasten
 -- dofile (props["SciteUserHome"].."/.scite/tictactoe.lua") 
 -- dofile (props["SciteUserHome"].."/.scite/eliza.lua") 
 -- dofile (props["SciteUserHome"].."/.scite/scitefunclist.lua") 
